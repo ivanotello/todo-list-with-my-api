@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-export function TaskList({ list, setList }) {
-	const removeItem = itemIndex => {
-		const newList = list.filter((todo, index) => {
-			return index != itemIndex;
-		});
-		setList(newList);
-	};
+export function TaskList({ removeItem, list }) {
+	// const removeItem = itemIndex => {
+	// 	const newList = list.filter((todo, index) => {
+	// 		return index != itemIndex;
+	// 	});
+	// 	setList(newList);
+	// };
 	const [showX, setShowX] = useState(false);
 
 	const taskList = list.map((task, index) => (
@@ -17,7 +17,7 @@ export function TaskList({ list, setList }) {
 			onMouseEnter={() => setShowX(true)}
 			onMouseLeave={() => setShowX(false)}>
 			<li className="list-group-item" style={{ width: "100%" }}>
-				{task}
+				{task.label}
 				{showX && (
 					<span
 						className="float-right h-auto"
@@ -37,6 +37,6 @@ export function TaskList({ list, setList }) {
 }
 
 TaskList.propTypes = {
-	list: PropTypes.any,
-	setList: PropTypes.any
+	removeItem: PropTypes.any,
+	list: PropTypes.any
 };

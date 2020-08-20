@@ -1,21 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export const NewTask = ({ setTodo, todo, setList, list }) => {
-	const addTaskFromInput = e => {
-		setTodo(e.target.value);
-	};
-	const addToList = () => {
-		setList([...list, todo]);
-		setTodo("");
-	};
+export const NewTask = ({ setTodo, todo, addToList }) => {
+	// const addToList = () => {
+	// 	setList([...list, todo]);
+	// 	setTodo("");
+	// };
 
 	return (
 		<div className="input-group mt-3 ">
 			<input
 				type="text"
 				className="form-control"
-				onChange={addTaskFromInput}
+				onChange={e => setTodo(e.target.value)}
 				value={todo}
 				placeholder="Add new task"
 				aria-label="Recipient's username"
@@ -37,6 +34,5 @@ export const NewTask = ({ setTodo, todo, setList, list }) => {
 NewTask.propTypes = {
 	setTodo: PropTypes.any,
 	todo: PropTypes.any,
-	setList: PropTypes.any,
-	list: PropTypes.any
+	addToList: PropTypes.any
 };
