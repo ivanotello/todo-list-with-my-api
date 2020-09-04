@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { TaskList } from "./TaskList";
 import { NewTask } from "./NewTask.js";
 
-const baseURL = "https://assets.breatheco.de/apis/fake/todos";
+const baseURL =
+	"https://3245-eb01c73f-c24c-4072-9df2-51469f94d149.ws-us02.gitpod.io";
 
 const TodoList = () => {
 	const [loggedUser, setLoggedUser] = useState(true);
@@ -11,7 +12,7 @@ const TodoList = () => {
 
 	const getTaskList = async () => {
 		try {
-			const response = await fetch(`${baseURL}/user/ivanotello`);
+			const response = await fetch(`${baseURL}/todos`);
 			if (response.ok) {
 				let tasks = await response.json();
 				setList(tasks);
@@ -25,7 +26,7 @@ const TodoList = () => {
 
 	const addToList = async () => {
 		try {
-			const response = await fetch(`${baseURL}/user/ivanotello`, {
+			const response = await fetch(`${baseURL}/todos`, {
 				method: "PUT",
 				body: JSON.stringify([...list, { label: todo, done: false }]),
 				headers: {
@@ -47,7 +48,7 @@ const TodoList = () => {
 			let newList = list.filter((todo, index) => {
 				return index != itemIndex;
 			});
-			const response = await fetch(`${baseURL}/user/ivanotello`, {
+			const response = await fetch(`${baseURL}/todos`, {
 				method: "PUT",
 				body: JSON.stringify(newList),
 				headers: {
@@ -63,43 +64,9 @@ const TodoList = () => {
 			console.log("removeItem", error);
 		}
 	};
-	useEffect(
-		() => {
-			if (loggedUser) {
-				const checkUser = async () => {
-					try {
-						const response = await fetch(
-							`${baseURL}/user/ivanotello`
-						);
-						if (response.ok) {
-							getTaskList();
-						} else {
-							const addUser = await fetch(
-								`${baseURL}/user/ivanotello`,
-								{
-									method: "POST",
-									body: JSON.stringify([]),
-									headers: {
-										"Content-Type": "application/json"
-									}
-								}
-							);
-							if (addUser.ok) {
-								getTaskList();
-							} else {
-								console.log("problema con checkUser");
-							}
-						}
-						setLoggedUser(false);
-					} catch (error) {
-						console.log("checkUser", error);
-					}
-				};
-				checkUser();
-			}
-		},
-		[loggedUser]
-	);
+	useEffect(() => {
+		getTaskList();
+	}, []);
 
 	return (
 		<div className="container margin-auto w-50">
