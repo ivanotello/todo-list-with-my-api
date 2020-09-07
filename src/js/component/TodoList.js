@@ -27,8 +27,8 @@ const TodoList = () => {
 	const addToList = async () => {
 		try {
 			const response = await fetch(`${baseURL}/todos`, {
-				method: "PUT",
-				body: JSON.stringify([...list, { label: todo, done: false }]),
+				method: "POST",
+				body: JSON.stringify({ label: todo, done: false }),
 				headers: {
 					"Content-Type": "application/json"
 				}
@@ -48,8 +48,8 @@ const TodoList = () => {
 			let newList = list.filter((todo, index) => {
 				return index != itemIndex;
 			});
-			const response = await fetch(`${baseURL}/todos`, {
-				method: "PUT",
+			const response = await fetch(`${baseURL}/todos/${itemIndex + 1}`, {
+				method: "DELETE",
 				body: JSON.stringify(newList),
 				headers: {
 					"Content-Type": "application/json"
